@@ -1,0 +1,16 @@
+# For certain vehicles, multiply the amount of cargo added/removed.
+# This is because GTFO messages only report the number of containers
+# loaded/unloaded, not the amount of FU (freight units), so some vehicles
+# would be disadvantaged if they have fewer, larger containers.
+#
+# To add a vehicle, use the following format:
+#
+# name prefix|creator key|multiplier
+#
+# Any vehicle with a name starting with the specified prefix and created by
+# the avatar with a matching key will receive the bonus mulitplier when
+# picking up or delivering.
+#
+SA - Erickson S-64|2cb70efb-e393-4f15-a7ab-599ed9b43046|28
+SA - Chinook|2cb70efb-e393-4f15-a7ab-599ed9b43046|6
+SA/VSD - S58|2cb70efb-e393-4f15-a7ab-599ed9b43046|2
