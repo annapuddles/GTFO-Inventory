@@ -1,33 +1,18 @@
-# GTFO! Inventory item configuration
+# GTFO! Inventory vehicle multipliers
 #
-# This list defines the settings for GTFO! items that are delivered to/picked up
-# from your hub.
+# For certain vehicles, multiply the amount of cargo added/removed.
+# This is because GTFO messages only report the number of containers
+# loaded/unloaded, not the amount of FU (freight units), so some vehicles
+# would be disadvantaged if they have fewer, larger containers.
 #
-# Format: name|max|consumption|byproduct
+# To add a vehicle, use the following format:
 #
-# name
-#  The GTFO cargo name.
+# name prefix|creator key|multiplier
 #
-# max
-#  The maximum amount of the cargo that can be stored.
-#  -1 means no maximum.
-#
-# consumption
-#  The number of units consumed every consume_rate hours (see the settings
-#  notecard).
-#  0 means the item is not consumed.
-#
-# byproduct
-#  When units are consumed, add the same amount of units of this cargo type to
-#  the inventory. Use an empty string for no byproduct.
-#
-# Any items not on this list are treated as having a max of -1 and consumption of 0.
+# Any vehicle with a name starting with the specified prefix and created by
+# the avatar with a matching key will receive the bonus mulitplier when
+# picking up or delivering.
 
-Food Delivery (Catered)|100|1|
-Fuel Cells (Aether)|100|0|Empty Fuel Cells
-Fuel Cells (He-3)|100|2|Empty Fuel Cells
-Class-A Freight|100|2|
-Spare Parts Kits|100|0|
-SuperChewy Candy|100|2|
-Duct Tape|100|1|
-Non-Redundant Spares|100|2|
+SA - Erickson S-64|2cb70efb-e393-4f15-a7ab-599ed9b43046|28
+SA - Chinook|2cb70efb-e393-4f15-a7ab-599ed9b43046|6
+SA/VSD - S58|2cb70efb-e393-4f15-a7ab-599ed9b43046|2
