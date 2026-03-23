@@ -1,0 +1,19 @@
+# GTFO! Inventory settings
+
+# The key of the GenTek text board
+inventory_board = 450d5236-3e4d-38cb-6923-7ad2f2966937
+
+# The channel the GenTek text board uses
+inventory_board_channel = -495310229
+
+# How often in seconds to progress the text board
+update_interval = 20
+
+# The max number of pages the text board will show
+max_pages = 6
+
+# Whether to show all inventory items or only those that are consumed
+show_all_inventory = 0
+
+# Rate in hours at which consumption occurs
+consume_rate = 4
