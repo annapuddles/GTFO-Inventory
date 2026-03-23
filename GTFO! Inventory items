@@ -1,0 +1,32 @@
+# GTFO! Inventory item configuration
+#
+# This list defines the settings for GTFO! items that are delivered to/picked up
+# from your hub.
+#
+# Format: name|max|consumption|byproduct
+#
+# name
+#  The GTFO cargo name.
+#
+# max
+#  The maximum amount of the cargo that can be stored.
+#  -1 means no maximum.
+#
+# consumption
+#  The number of units consumed per hour.
+#  0 means the item is not consumed.
+#
+# byproduct
+#  When units are consumed, add the same amount of units of this cargo type to
+#  the inventory. Use an empty string for no byproduct.
+#
+# Any items not on this list are treated as having a max of -1 and consumption of 0.
+#
+Food Delivery (Catered)|100|1|
+Fuel Cells (Aether)|100|0|Empty Fuel Cells
+Fuel Cells (He-3)|100|2|Empty Fuel Cells
+Class-A Freight|100|2|
+Spare Parts Kits|100|0|
+SuperChewy Candy|100|2|
+Duct Tape|100|1|
+Non-Redundant Spares|100|2|
