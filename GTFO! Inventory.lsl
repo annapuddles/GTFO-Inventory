@@ -1,8 +1,13 @@
-// GTFO! Inventory v0.1.0
+// GTFO! Inventory v1.0.0
 //
 // Tracks GTFO deliveries and pickups and optionally consumes specified types of cargo over time.
 
-// CONFIGURATION
+// List of configuration notecards to read
+list config_notecards = [
+    "GTFO! Inventory settings",
+    "GTFO! Inventory items",
+    "GTFO! Inventory multipliers"
+];
 
 // Inventory configuration settings
 //
@@ -22,35 +27,16 @@
 // byproduct
 //  When units are consumed, add the same amount of units of this cargo type to
 //  the inventory. Use an empty string for no byproduct.
-list inventory_config = [
-    "Food Delivery (Catered)", 100, 1, "",
-    "Fuel Cells (Aether)", 100, 0, "Empty Fuel Cells",
-    "Fuel Cells (He-3)", 100, 2, "Empty Fuel Cells",
-    "Class-A Freight", 100, 2, "",
-    "Spare Parts Kits", 100, 0, "",
-    "SuperChewy Candy", 100, 2, "",
-    "Duct Tape", 100, 1, "",
-    "Empty Fuel Cells", -1, 0, "",
-    "Priority Freight", -1, 0, "",
-    "Subscription Gachas", -1, 0, "",
-    "Artisanal Toilet Paper", -1, 0, "",
-    "Offshelf Spare Parts", 100, 1, "",
-    "Chilled Wine", -1, 0, "",
-    "Two-for-one Rubber Chickens", -1, 0, "",
-    "The Business", -1, 0, "",
-    "Compacted Barrels", -1, 0, "",
-    "Fabricator Stock (Alloy)", -1, 0, "",
-    "Non-Redundant Spares", 100, 2, ""
-];
+list inventory_config;
 
 // Number of elements for each entry in the inventory config list
 integer inventory_config_stride = 4;
 
 // The UUID of the Gentek text display board
-key inventory_board = "450d5236-3e4d-38cb-6923-7ad2f2966937";
+key inventory_board;
 
 // The channel used to communicate with the display board
-integer inventory_board_channel = -495310229;
+integer inventory_board_channel;
 
 // How often to progress the board
 float update_interval = 20;
@@ -68,13 +54,7 @@ integer consume_rate = 4;
 // This is because GTFO messages only report the number of containers
 // loaded/unloaded, not the amount of FU (freight units), so some vehicles
 // would be disadvantaged if they have fewer, larger containers.
-list vehicle_multipliers = [
-    "SA - Erickson S-64", "2cb70efb-e393-4f15-a7ab-599ed9b43046", 28,
-    "SA - Chinook", "2cb70efb-e393-4f15-a7ab-599ed9b43046", 6,
-    "SA/VSD - S58", "2cb70efb-e393-4f15-a7ab-599ed9b43046", 2
-];
-
-// END OF CONFIGURATION
+list vehicle_multipliers;
 
 // Channel for GTFO messages
 integer gtfo_channel = -9600;
@@ -89,6 +69,18 @@ integer last_update;
 
 // The current page of the display board
 integer inventory_board_page = 0;
+
+// Index of the config notecard currently being read
+integer config_notecards_index = -1;
+
+// Name of the notecard currently being read
+string notecard_name;
+
+// Current dataserver query ID
+key notecard_query;
+
+// Current line number being read
+integer notecard_line;
 
 // Save the inventory daata to the linkset
 save_inventory()
@@ -463,16 +455,129 @@ jsonrpc_link_notification(integer link, string method, string params_type, list 
     llMessageLinked(link, 0, jsonrpc_notification(method, params_type, params), NULL_KEY);
 }
 
+// Read the next configuration notecard, return TRUE if there are more to read or FALSE if finished
+integer read_next_config_notecard()
+{
+    integer n = llGetListLength(config_notecards);
+    
+    for (++config_notecards_index; config_notecards_index < n; ++config_notecards_index)
+    {
+        string notecard = llList2String(config_notecards, config_notecards_index);
+        
+        if (llGetInventoryType(notecard) == INVENTORY_NOTECARD)
+        {
+            notecard_query = llGetNotecardLine(notecard_name = notecard, notecard_line = 0);
+            return TRUE;
+        }
+    }
+    
+    return FALSE;
+}
+
+// Complete the initialization and start updating the board
+start()
+{
+    load_inventory();
+    
+    llListen(gtfo_channel, "", "", "");
+    
+    update_inventory_board();
+    llSetTimerEvent(update_interval);
+}
+
 default
 {
     state_entry()
     {
-        load_inventory();
-
-        llListen(gtfo_channel, "", "", "");
+        llOwnerSay("Free memory: " + (string) llGetFreeMemory());
         
-        update_inventory_board();
-        llSetTimerEvent(update_interval);
+        if (!read_next_config_notecard())
+        {
+            start();
+        }
+    }
+
+    dataserver(key query_id, string data)
+    {
+        if (query_id != notecard_query)
+        {
+            return;
+        }
+
+        while (data != EOF && data != NAK)
+        {
+            // Ignore empty lines and comments
+            if (data != "" && llGetSubString(data, 0, 0) != "#")
+            {
+                // GTFO! Inventory settings
+                if (config_notecards_index == 0)
+                {
+                    list line = llParseStringKeepNulls(data, [" = "], []);
+
+                    string setting_name = llList2String(line, 0);
+                    string setting_value = llList2String(line, 1);
+
+                    if (setting_name == "inventory_board")
+                    {
+                        inventory_board = (key) setting_value;
+                    }
+                    else if (setting_name == "inventory_board_channel")
+                    {
+                        inventory_board_channel = (integer) setting_value;
+                    }
+                    else if (setting_name == "update_interval")
+                    {
+                        update_interval = (float) setting_value;
+                    }
+                    else if (setting_name == "max_pages")
+                    {
+                        max_pages = (integer) setting_value;
+                    }
+                    else if (setting_name == "show_all_inventory")
+                    {
+                        show_all_inventory = (integer) setting_value;
+                    }
+                    else if (setting_name == "consume_rate")
+                    {
+                        consume_rate = (integer) setting_value;
+                    }
+                }
+                // GTFO! Inventory items
+                else if (config_notecards_index == 1)
+                {
+                    list line = llParseStringKeepNulls(data, ["|"], []);
+                    string name = llList2String(line, 0);
+                    integer max = (integer) llList2String(line, 1);
+                    integer consume = (integer) llList2String(line, 2);
+                    string byproduct = llList2String(line, 3);
+                    inventory_config += [name, max, consume, byproduct];
+                }
+                // GTFO! Inventory multipliers
+                else if (config_notecards_index == 2)
+                {
+                    list line = llParseStringKeepNulls(data, ["|"], []);
+                    string prefix = llList2String(line, 0);
+                    key creator = (key) llList2String(line, 1);
+                    integer mult = (integer) llList2String(line, 2);
+                    vehicle_multipliers += [prefix, creator, mult];
+                }
+            }
+
+            data = llGetNotecardLineSync(notecard_name, ++notecard_line);
+        }
+
+        if (data == NAK)
+        {
+            notecard_query = llGetNotecardLine(notecard_name, notecard_line);
+        }
+
+        if (data == EOF)
+        {
+            if (!read_next_config_notecard())
+            {
+                start();
+            }
+        }
     }
 
     listen(integer channel, string name, key id, string message)
