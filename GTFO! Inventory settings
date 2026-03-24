@@ -1,10 +1,10 @@
 # GTFO! Inventory settings
 
 # The key of the GenTek text board
-inventory_board = 450d5236-3e4d-38cb-6923-7ad2f2966937
+inventory_board = 
 
 # The channel the GenTek text board uses
-inventory_board_channel = -495310229
+inventory_board_channel = -123456789
 
 # How often in seconds to progress the text board
 update_interval = 20
