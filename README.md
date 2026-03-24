@@ -71,21 +71,21 @@ name prefix|creator key|multiplier
 | `creator key` | The UUID of the creator of the vehicle.           |
 | `multiplier`  | The number to multiply the amount of stock by.    |
 
+# Activating the web interface
+
+Once rezzed, the `GTFO! Inventory server` will already be tracking GTFO! deliveries and pickups, but to enable the web interface you must do the following:
+
+1. Click on the `GTFO! Inventory server` object at your hub.
+2. Click the `power on` button to start the prim-dns server.
+3. Copy the auth key in chat into `prim-dns config` notecard, placing it on the line after `auth = `.
+
+You can then access the web interface on the built-in media screen, or at `https://annapuddles.com/prim-dns/redirect/<uuid>`, where `<uuid>` is the UUID of the `GTFO! Inventory server` object.
+
+If desired, you can set a custom alias for your web interface instead of the object's UUID by modifying the `prim-dns config` notecard.
+
 # Connecting to the GenTek textboard
 
 1. Rez the GenTek text board.
 2. Set the channel number in the board's settings.
 3. Copy the UUID of the board and the channel number into the `GTFO! Inventory settings` notecard.
 4. Reset the `GTFO! Inventory` script.
-
-# Activating the web interface
-
-Once rezzed, the `GTFO! Inventory server` will already be tracking GTFO! deliveries and pickups, but to enable the web interface you must do the following:
-
-1. Click on the `GTFO! Inventory server` object at your hub.
-2. Click the `power on` button to start the server.
-3. Copy the auth key in chat into `prim-dns config` notecard, placing it on the line after `auth = `.
-
-You can then access the web interface at `https://annapuddles.com/prim-dns/redirect/<uuid>`, where `<uuid>` is the UUID of the `GTFO! Inventory server` object.
-
-If desired, you can set a custom alias for your web interface instead of the object's UUID by modifying the `prim-dns config` notecard.
