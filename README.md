@@ -11,7 +11,7 @@ GTFO! Inventory is an inventory system for the GTFO! cargo delivery game on Seco
 
 # Setup
 
-Place the script and configuration notecards in an object of your choice at your GTFO! hub.
+Rez the `GTFO! Inventory server` object at your GTFO! hub.
 
 # Configuration
 
