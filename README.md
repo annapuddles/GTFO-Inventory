@@ -73,4 +73,9 @@ name prefix|creator key|multiplier
 
 # Connecting to the GenTek textboard
 
+1. Rez the GenTek text board.
+2. Set the channel number in the board's settings.
+3. Copy the UUID of the board and the channel number into the `GTFO! Inventory settings` notecard.
+4. Reset the `GTFO! Inventory` script.
+
 # Activating the web interface
