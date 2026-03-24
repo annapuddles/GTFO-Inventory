@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <title>GTFO! Inventory: Hyena Heliport</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/slate/bootstrap.min.css"/>
+        <script src="index.js"/>
+        <style>
+            p.legend {
+            display: flex;
+            gap: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>GTFO! Inventory: <a href="http://maps.secondlife.com/secondlife/Helgi/183/13/22">Hyena Heliport</a></h1>
+        <p>Certain items delivered to this hub are consumed over time as part of day-to-day operations, so these need to be resupplied regularly! Others are merely stored and can be exported to other hubs.</p>
+        <p class="legend">
+            <div><div class="badge bg-danger"> </div> Runs out in &lt; 24 hours</div>
+            <div><div class="badge bg-warning"> </div> Runs out in &lt; 72 hours</div>
+            <div><div class="badge bg-success"> </div> Runs out in &lt; 1 week</div>
+            <div><div class="badge bg-info"> </div> Exportable goods</div>
+        </p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>QTY</th>
+                    <th>MAX</th>
+                    <th>ITEM</th>
+                </tr>
+            </thead>
+            <tbody id="inventory"/>
+        </table>
+    </body>
+</html>
