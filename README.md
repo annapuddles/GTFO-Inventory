@@ -7,7 +7,7 @@ GTFO! Inventory is an inventory system for the GTFO! cargo delivery game on Seco
 - Tracks deliveries and pickups at your GTFO! hub and records how much stock you have of each item
 - Items can be set to be consumed over time, which provides a reason to restock your hub regularly
 - Items can create byproducts when consumed which are added to your inventory and should be taken away
-- Stock levels can be displayed on a [GenTek text board](https://marketplace.secondlife.com/p/InfoCenter-Display-Kit-Four-Electronic-Text-Display-Sign-Models/6579929) and/or a web interface (with [prim-dns](https://github.com/annapuddles/prim-dns-server))
+- Stock levels can be displayed on a [GenTek Highway Duo sign](https://marketplace.secondlife.com/p/InfoCenter-Display-Kit-Four-Electronic-Text-Display-Sign-Models/6579929) and/or a web interface (with [prim-dns](https://github.com/annapuddles/prim-dns-server))
 
 # Setup
 
