@@ -4,7 +4,7 @@
 inventory_board = 
 
 # The channel the GenTek text board uses
-inventory_board_channel = -123456789
+inventory_board_channel = -495310229
 
 # How often in seconds to progress the text board
 update_interval = 20
